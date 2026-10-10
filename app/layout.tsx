@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { SiteAnalytics } from "@/components/site-analytics";
 import { MotionEffects } from "@/components/motion-effects";
+import { CinematicIntro } from "@/components/cinematic-intro";
 
 export const metadata: Metadata = {
   title: { default: "Big Fish Collective | Talent Agency in Hyderabad", template: "%s | Big Fish Collective" },
@@ -10,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className="antialiased"><MotionEffects /><SiteAnalytics />{children}</body></html>;
+  return <html lang="en"><body className="antialiased"><CinematicIntro /><MotionEffects /><SiteAnalytics />{children}</body></html>;
 }
