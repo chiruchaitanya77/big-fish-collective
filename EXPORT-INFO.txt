@@ -1,0 +1,7 @@
+Big Fish Collective independent source export
+Date: 2026-10-08
+Source version: 17
+Source commit: a5764bdcc64f1c4447477a8f4ab00934edaf98c5
+Includes source, assets, SQL schema/migrations and rebuilt Worker output.
+Export-only changes: independent package/hosting configuration, setup guide, standalone test-directory setup.
+Excludes production database records, credentials, Git history, dependencies and obsolete QA page exports.
