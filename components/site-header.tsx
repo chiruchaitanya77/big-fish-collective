@@ -30,7 +30,8 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
 
   return (
     <header
-      className={`${overlay ? "absolute" : "sticky border-b border-black bg-white"} inset-x-0 top-0 z-50`}
+      data-overlay={overlay ? "true" : "false"}
+      className={`site-header ${overlay ? "absolute" : "sticky border-b border-black bg-white"} inset-x-0 top-0 z-[100]`}
     >
       <div
         className={`mx-auto flex h-24 max-w-360 items-center justify-between px-5 sm:px-8 lg:px-12 ${ink}`}
