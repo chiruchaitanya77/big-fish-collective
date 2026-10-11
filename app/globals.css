@@ -326,9 +326,58 @@ body.motion-ready .motion-card.is-visible {
   opacity: 1;
   transform: none;
 }
+body.motion-ready::after {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 9997;
+  height: 2px;
+  pointer-events: none;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: route-line 900ms cubic-bezier(.22, 1, .36, 1) both;
+}
+body.motion-ready .motion-card {
+  transform: translate3d(0, 2rem, 0) rotateX(3deg);
+  transform-origin: center top;
+  transition: opacity 900ms cubic-bezier(.22, 1, .36, 1), transform 900ms cubic-bezier(.22, 1, .36, 1);
+}
+body.motion-ready .motion-card.is-visible {
+  transform: none;
+}
+body.motion-ready .motion-text {
+  opacity: 0;
+  clip-path: inset(0 0 100% 0);
+  transform: translate3d(0, .55em, 0);
+  transition: opacity 760ms cubic-bezier(.22, 1, .36, 1), clip-path 900ms cubic-bezier(.76, 0, .24, 1), transform 900ms cubic-bezier(.76, 0, .24, 1);
+  transition-delay: var(--motion-text-delay, 0ms);
+}
+body.motion-ready .motion-section.is-visible .motion-text,
+body.motion-ready footer.is-visible .motion-text {
+  opacity: 1;
+  clip-path: inset(0);
+  transform: none;
+}
+body.motion-ready .motion-stagger-item {
+  opacity: 0;
+  transform: translate3d(0, 1.25rem, 0);
+  transition: opacity 720ms cubic-bezier(.22, 1, .36, 1), transform 720ms cubic-bezier(.22, 1, .36, 1);
+  transition-delay: var(--motion-list-delay, 0ms);
+}
+body.motion-ready .motion-section.is-visible .motion-stagger-item,
+body.motion-ready footer.is-visible .motion-stagger-item {
+  opacity: 1;
+  transform: none;
+}
 .motion-hero-image {
   animation: hero-drift 18s ease-in-out infinite alternate;
   transform-origin: 68% 50%;
+  will-change: transform;
+}
+.motion-parallax-media:not(.motion-hero-image) {
+  transform: translate3d(0, var(--motion-parallax, 0px), 0) scale(1.045);
+  transform-origin: center;
   will-change: transform;
 }
 main > section:first-of-type { position: relative; overflow: hidden; }
@@ -359,6 +408,12 @@ a:hover > svg, button:hover > svg { transform: translate(3px, -3px); }
 @keyframes ticker { to { transform: translateX(-50%); } }
 @keyframes film-grain { 0% { transform: translate(0,0); } 25% { transform: translate(-1%,2%); } 50% { transform: translate(2%,-1%); } 75% { transform: translate(1%,1%); } 100% { transform: translate(-2%,-1%); } }
 @keyframes page-enter { from { opacity: .78; } to { opacity: 1; } }
+@keyframes route-line {
+  0% { opacity: 0; transform: scaleX(0); }
+  18% { opacity: .8; transform: scaleX(.28); }
+  76% { opacity: .35; transform: scaleX(1); }
+  100% { opacity: 0; transform: scaleX(1); }
+}
 
 .eyebrow {
   font-size: 0.76rem;
@@ -393,8 +448,11 @@ a:hover > svg, button:hover > svg { transform: translate(3px, -3px); }
 @media (prefers-reduced-motion: reduce) {
   body.motion-ready .motion-section,
   body.motion-ready .motion-card { opacity: 1; transform: none; }
+  body.motion-ready .motion-text,
+  body.motion-ready .motion-stagger-item { opacity: 1; clip-path: none; transform: none; }
   .motion-hero-image { animation: none; }
-  body::before, body.motion-ready, main > section:first-of-type::after, .film-ticker-track { animation: none; }
+  .motion-parallax-media:not(.motion-hero-image) { transform: none; }
+  body::before, body::after, body.motion-ready, main > section:first-of-type::after, .film-ticker-track { animation: none; }
   .film-ticker-track { transform: none; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
