@@ -116,6 +116,15 @@ export default function Home() {
         <div className="mx-auto grid max-w-360 gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[0.42fr_1fr] lg:px-12 lg:py-32">
           <div>
             <p className="eyebrow text-ocean">Who we are</p>
+            <img
+              src="/illustrations/collective-film-illustration.svg"
+              alt="Editorial illustration of a film crew collaborating around a camera"
+              className="mt-8 w-full max-w-sm"
+              width={560}
+              height={440}
+              loading="lazy"
+              decoding="async"
+            />
           </div>
           <div>
             <h2 className="section-title max-w-5xl">
@@ -248,6 +257,15 @@ export default function Home() {
               <h2 className="mt-5 font-serif text-5xl tracking-tight">
                 One brief. One accountable team.
               </h2>
+              <img
+                src="/illustrations/talent-network-illustration.svg"
+                alt="Illustration of creative talent connected through a shared production network"
+                className="mt-8 w-full max-w-md"
+                width={640}
+                height={360}
+                loading="lazy"
+                decoding="async"
+              />
             </div>
             <div className="grid gap-8 sm:grid-cols-3">
               {[
