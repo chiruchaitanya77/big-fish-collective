@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Creative talent network</title>
+  <desc id="desc">Editorial diagram connecting a director, performer, and production partner.</desc>
+  <rect x="1" y="1" width="638" height="358" fill="#F4F2ED" stroke="#161616" stroke-opacity=".18"/>
+  <path d="M150 118C210 118 224 178 282 178M490 118C430 118 416 178 358 178M320 236V281" stroke="#161616" stroke-width="1.5" stroke-dasharray="5 6"/>
+  <circle cx="150" cy="104" r="49" fill="#D8E4D8" stroke="#161616" stroke-width="1.5"/>
+  <circle cx="490" cy="104" r="49" fill="#E5B99D" stroke="#161616" stroke-width="1.5"/>
+  <circle cx="320" cy="178" r="58" fill="#161616"/>
+  <circle cx="150" cy="93" r="14" fill="#E5B99D" stroke="#161616" stroke-width="1.5"/>
+  <path d="M124 135C126 113 137 108 150 108C163 108 174 113 176 135" fill="#E5B99D" stroke="#161616" stroke-width="1.5"/>
+  <path d="M138 91C139 76 161 73 164 91" stroke="#161616" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="490" cy="92" r="14" fill="#E5B99D" stroke="#161616" stroke-width="1.5"/>
+  <path d="M464 135C466 113 477 108 490 108C503 108 514 113 516 135" fill="#E5B99D" stroke="#161616" stroke-width="1.5"/>
+  <path d="M477 86C479 72 501 72 503 87" stroke="#161616" stroke-width="5" stroke-linecap="round"/>
+  <rect x="293" y="151" width="54" height="36" rx="3" fill="#F4F2ED"/>
+  <circle cx="320" cy="169" r="12" stroke="#161616" stroke-width="3"/>
+  <circle cx="320" cy="169" r="4" fill="#161616"/>
+  <path d="M300 151L307 140H333L340 151" stroke="#F4F2ED" stroke-width="3"/>
+  <circle cx="320" cy="281" r="25" fill="#D8E4D8" stroke="#161616" stroke-width="1.5"/>
+  <path d="M309 281L317 289L332 271" stroke="#161616" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="150" y="174" fill="#161616" font-family="Arial, Helvetica, sans-serif" font-size="10" text-anchor="middle" letter-spacing="1.5">TALENT</text>
+  <text x="490" y="174" fill="#161616" font-family="Arial, Helvetica, sans-serif" font-size="10" text-anchor="middle" letter-spacing="1.5">PARTNERS</text>
+  <text x="320" y="254" fill="#161616" font-family="Arial, Helvetica, sans-serif" font-size="10" text-anchor="middle" letter-spacing="1.5">CLEAR NEXT STEPS</text>
+  <text x="28" y="32" fill="#161616" font-family="Arial, Helvetica, sans-serif" font-size="10" letter-spacing="2">THE RIGHT PEOPLE, CONNECTED</text>
+  <path d="M576 27L580 38L591 42L580 46L576 57L572 46L561 42L572 38L576 27Z" fill="#161616"/>
+</svg>
