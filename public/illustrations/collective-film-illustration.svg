@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Creative film collective</title>
+  <desc id="desc">Minimal editorial line illustration of a film camera, crew, and studio lights.</desc>
+  <rect x="18" y="18" width="524" height="404" rx="2" fill="#F4F2ED"/>
+  <circle cx="414" cy="118" r="72" fill="#D8E4D8"/>
+  <path d="M44 348H514" stroke="#161616" stroke-width="2"/>
+  <path d="M78 348V164H193V348" stroke="#161616" stroke-width="2"/>
+  <path d="M94 183H176M94 204H176M94 225H176" stroke="#161616" stroke-width="1.5" opacity=".45"/>
+  <path d="M115 348V281C115 254 135 234 160 234H163C188 234 207 254 207 281V348" fill="#E5B99D" stroke="#161616" stroke-width="2"/>
+  <circle cx="161" cy="210" r="26" fill="#E5B99D" stroke="#161616" stroke-width="2"/>
+  <path d="M136 208C137 187 151 176 169 180C183 183 190 194 188 208" fill="#161616"/>
+  <path d="M134 279L106 319M190 280L219 315" stroke="#161616" stroke-width="12" stroke-linecap="round"/>
+  <rect x="232" y="204" width="170" height="96" rx="4" fill="#161616"/>
+  <rect x="248" y="218" width="92" height="66" fill="#D8E4D8"/>
+  <circle cx="368" cy="252" r="24" fill="#F4F2ED" stroke="#D8E4D8" stroke-width="5"/>
+  <circle cx="368" cy="252" r="10" fill="#161616"/>
+  <path d="M260 205L278 177H332L350 205" fill="#161616"/>
+  <path d="M254 300L241 347M382 300L399 347" stroke="#161616" stroke-width="5"/>
+  <path d="M448 188V348M430 348H466" stroke="#161616" stroke-width="2"/>
+  <path d="M414 176L448 148L482 176V188H414V176Z" fill="#E5B99D" stroke="#161616" stroke-width="2"/>
+  <path d="M448 148V128M438 128H458" stroke="#161616" stroke-width="2"/>
+  <path d="M45 70H178" stroke="#161616" stroke-width="2"/>
+  <text x="45" y="58" fill="#161616" font-family="Arial, Helvetica, sans-serif" font-size="11" letter-spacing="3">MADE TOGETHER</text>
+  <text x="44" y="390" fill="#161616" font-family="Arial, Helvetica, sans-serif" font-size="10" letter-spacing="2">CAST · CREW · COLLABORATION</text>
+  <path d="M460 68L465 82L480 87L465 92L460 106L455 92L440 87L455 82L460 68Z" fill="#161616"/>
+</svg>
