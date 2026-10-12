@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "@/components/site-link";
-import { ArrowDown, ArrowUpRight, Check } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Check, Handshake, Users } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CtaBand } from "@/components/cta-band";
@@ -63,17 +63,17 @@ export default function FindTalentPage() {
       <SiteHeader />
 
       <section className="bg-white" aria-labelledby="find-talent-title">
-        <div className="mx-auto grid max-w-360 lg:min-h-[680px] lg:grid-cols-[1.02fr_0.98fr]">
-          <div className="flex flex-col justify-center px-5 pb-14 pt-16 sm:px-8 sm:pb-20 lg:px-12 lg:py-24">
+        <div className="mx-auto grid max-w-360 lg:min-h-170 lg:grid-cols-[1.3fr_0.98fr]">
+          <div className="flex flex-col justify-center px-5 pb-14 pt-16 sm:px-8 sm:pb-20 lg:px-10 lg:py-20">
             <p className="eyebrow">Find talent · Hyderabad and beyond</p>
             <h1
               id="find-talent-title"
-              className="mt-7 max-w-3xl font-sans text-[clamp(3.4rem,7.4vw,7.3rem)] font-medium leading-[0.88] tracking-[-0.075em]"
+              className="mt-7 max-w-3xl font-sans text-[clamp(3.4rem,7vw,7.3rem)] font-medium leading-[0.94] tracking-[-0.040em]"
             >
               The right people.{" "}
               <span className="font-normal">Ready for the work.</span>
             </h1>
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ink/65 sm:text-xl">
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink/65 sm:text-xl">
               Find cast and crew for film, streaming, advertising, branded
               content, and creative productions. Share your brief and we’ll help
               you identify, evaluate, and engage people who fit the role and
@@ -93,15 +93,18 @@ export default function FindTalentPage() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="h-12 rounded-none border-ink px-6 text-ink hover:bg-ink hover:text-white"
+                className="h-12 rounded-none border-ink! px-6 text-ink! bg-black/5! hover:bg-ink! hover:text-white!"
               >
                 <Link href="#find-process">
-                  How the Search Works <ArrowDown />
+                  How the Search Works{" "}
+                  <ArrowDown className="process-down-arrow size-4" />
                 </Link>
               </Button>
             </div>
+
             <div className="mt-14 grid max-w-xl grid-cols-2 gap-5 border-t border-black/15 pt-5 text-sm text-ink/55 sm:mt-20">
               <div>
+                <Users size={26} strokeWidth={1.2} className="mb-2 text-ink" />
                 <span className="block text-2xl font-medium tracking-tight text-ink">
                   Cast
                 </span>
@@ -109,7 +112,13 @@ export default function FindTalentPage() {
                   Talent shaped around the brief.
                 </span>
               </div>
+
               <div>
+                <Handshake
+                  size={26}
+                  strokeWidth={1.2}
+                  className="mb-2 text-ink"
+                />
                 <span className="block text-2xl font-medium tracking-tight text-ink">
                   Crew
                 </span>
@@ -119,14 +128,14 @@ export default function FindTalentPage() {
               </div>
             </div>
           </div>
-          <div className="relative min-h-[390px] overflow-hidden bg-ink sm:min-h-[520px] lg:min-h-full">
+          <div className="relative min-h-97.5 overflow-hidden bg-ink sm:min-h-130 lg:min-h-full">
             <img
-              src="/06-find-talent-panel.png"
+              src="/02-for-talent-hero.png"
               alt="An actor delivering a scene during a casting rehearsal."
-              className="absolute inset-0 h-full w-full object-cover object-[68%_center] grayscale"
+              className="absolute inset-0 h-full w-full object-cover object-[40%_center] grayscale"
               width={1254}
               height={1254}
-              style={{ objectPosition: "55% 50%" }}
+              style={{ objectPosition: "85% 50%" }}
               decoding="async"
               fetchPriority="high"
             />
@@ -159,12 +168,12 @@ export default function FindTalentPage() {
             {capabilities.map(([title, copy], index) => (
               <article
                 key={title}
-                className="min-h-[270px] bg-ink p-6 sm:p-8 lg:p-10"
+                className="min-h-67.5 bg-ink p-6 sm:p-8 lg:p-10 viewfinder-hover group relative"
               >
-                <span className="text-xs tracking-[0.16em] text-white/45">
+                <span className="inline-block text-xs font-semibold group-hover:font-medium tracking-wider text-white/75 transition-transform duration-300 ease-out origin-left group-hover:scale-200">
                   0{index + 1}
                 </span>
-                <h3 className="mt-9 text-2xl font-medium tracking-[-0.035em]">
+                <h3 className="mt-6 text-2xl font-medium tracking-[-0.035em]">
                   {title}
                 </h3>
                 <p className="mt-4 leading-relaxed text-white/60">{copy}</p>

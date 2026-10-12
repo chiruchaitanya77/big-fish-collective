@@ -5,6 +5,10 @@ import {
   BriefcaseBusiness,
   Clapperboard,
   Compass,
+  FileText,
+  Sparkles,
+  TrendingUp,
+  Users,
   UsersRound,
 } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
@@ -14,28 +18,32 @@ import { Button } from "@/components/ui/button";
 import { FilmTicker } from "@/components/film-ticker";
 
 const strengths = [
-  [
-    "Curated matching",
-    "Every recommendation considers skill, experience, ambition, working style, and project fit.",
-  ],
-  [
-    "Human representation",
-    "Dedicated managers guide conversations, align expectations, and keep work moving.",
-  ],
-  [
-    "Clear commercial terms",
-    "Fees, usage, deliverables, dates, and contracts are aligned early and documented properly.",
-  ],
-  [
-    "Long-term thinking",
-    "We help talent make career decisions and partners build relationships worth repeating.",
-  ],
+  {
+    title: "Curated matching",
+    copy: "Every recommendation considers skill, experience, ambition, working style, and project fit.",
+    Icon: Sparkles,
+  },
+  {
+    title: "Human representation",
+    copy: "Dedicated managers guide conversations, align expectations, and keep work moving.",
+    Icon: Users,
+  },
+  {
+    title: "Clear commercial terms",
+    copy: "Fees, usage, deliverables, dates, and contracts are aligned early and documented properly.",
+    Icon: FileText,
+  },
+  {
+    title: "Long-term thinking",
+    copy: "We help talent make career decisions and partners build relationships worth repeating.",
+    Icon: TrendingUp,
+  },
 ];
 
 export default function Home() {
   return (
     <main>
-      <section className="relative min-h-190 overflow-hidden bg-deep-ocean text-white sm:min-h-205">
+      <section className="relative min-h-svh overflow-hidden bg-deep-ocean text-white">
         <SiteHeader overlay />
         <img
           src="/01-home-hero.png"
@@ -53,7 +61,7 @@ export default function Home() {
             <p className="eyebrow text-seafoam">
               A worldwide talent collective
             </p>
-            <h1 className="mt-6 font-serif text-[clamp(4rem,9vw,9rem)] leading-[0.84] tracking-[-0.065em]">
+            <h1 className="mt-6 font-serif text-[clamp(4rem,8vw,9rem)] leading-[0.98] tracking-[-0.015em]">
               Big talent deserves a{" "}
               <em className="font-normal text-seafoam">bigger stage.</em>
             </h1>
@@ -76,7 +84,7 @@ export default function Home() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="h-12 rounded-none border-white bg-black/20 px-6 text-white hover:bg-white hover:text-ink"
+                className="h-12 rounded-none border-white/40! bg-black/20 px-6 text-white hover:bg-white! transition-all duration-500 hover:text-ink"
               >
                 <Link href="/contact#talent-application">
                   Join the Collective
@@ -89,7 +97,7 @@ export default function Home() {
             aria-label="Scroll to introduction"
             className="absolute bottom-8 right-5 grid size-12 place-items-center border border-white/50 text-white/70 hover:bg-white hover:text-ink sm:right-8 lg:right-12"
           >
-            <ArrowDown className="size-5" />
+            <ArrowDown className="process-down-arrow size-5" />
           </a>
         </div>
       </section>
@@ -113,9 +121,21 @@ export default function Home() {
       </section>
 
       <section id="introduction" className="bg-paper">
-        <div className="mx-auto grid max-w-360 gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[0.42fr_1fr] lg:px-12 lg:py-32">
-          <div>
-            <p className="eyebrow text-ocean">Who we are</p>
+        <div className="mx-auto grid max-w-360 items-center gap-12 px-5 py-20 sm:px-8 lg:grid-cols-2 lg:px-12 lg:py-32">
+          <div className="w-full">
+            <p className="eyebrow text-ocean mb-4">Who we are</p>
+            {/* Container with custom height/width control. Adjust h-[350px] or lg:h-[450px] as needed */}
+            <div className="w-full h-80 sm:h-95 lg:h-140 overflow-hidden">
+              <img
+                src="/find-talent-network-illustration_updated.png"
+                alt="Big Fish Collective creative talent network collage"
+                className="w-full h-full object-cover object-center motion-inline-illustration motion-parallax-media "
+                width={800}
+                height={600}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
           </div>
           <div>
             <h2 className="section-title max-w-5xl">
@@ -133,8 +153,11 @@ export default function Home() {
               variant="link"
               className="mt-5 h-auto p-0 text-ocean"
             >
-              <Link href="/about">
-                Meet Big Fish Collective <ArrowUpRight />
+              <Link
+                href="/about"
+                className="inline-flex items-center gap-2 font-semibold underline text-ocean text-lg!"
+              >
+                Meet Big Fish Collective <ArrowUpRight className="size-5" />
               </Link>
             </Button>
           </div>
@@ -143,9 +166,10 @@ export default function Home() {
 
       <section className="border-y border-black/10 bg-white">
         <div className="mx-auto grid max-w-360 lg:grid-cols-2">
-          <article className="border-b border-black/10 p-7 sm:p-12 lg:border-b-0 lg:border-r lg:p-16">
-            <UsersRound className="size-9 text-ocean" />
-            <p className="eyebrow mt-12 text-ocean">I am talent</p>
+          <article className="border-b border-black/10 p-7 sm:p-12 lg:border-b-0 lg:border-r lg:p-16 viewfinder-hover group relative">
+            {/* className="viewfinder-hover group relative rounded-lg border border-black/10 bg-paper p-7 sm:p-9" */}
+            <UsersRound className="size-14 text-ocean" strokeWidth={1} />
+            <p className="eyebrow mt-6 text-ocean">I am talent</p>
             <h2 className="mt-4 font-serif text-4xl tracking-tight sm:text-5xl">
               Build a career with direction.
             </h2>
@@ -160,9 +184,9 @@ export default function Home() {
               Explore representation <ArrowUpRight className="size-4" />
             </Link>
           </article>
-          <article className="p-7 sm:p-12 lg:p-16">
-            <Clapperboard className="size-9 text-ocean" />
-            <p className="eyebrow mt-12 text-ocean">I am hiring</p>
+          <article className="p-7 sm:p-12 lg:p-16 viewfinder-hover group relative">
+            <Clapperboard className="size-14 text-ocean" strokeWidth={1} />
+            <p className="eyebrow mt-6 text-ocean">I am hiring</p>
             <h2 className="mt-4 font-serif text-4xl tracking-tight sm:text-5xl">
               Find the right people without the usual friction.
             </h2>
@@ -188,11 +212,34 @@ export default function Home() {
               <h2 className="section-title mt-5">
                 Better matches start with better understanding.
               </h2>
+              <img
+                src="/process-matching.png"
+                alt=""
+                aria-hidden="true"
+                className="motion-inline-illustration motion-parallax-media mt-10 w-full max-w-md"
+                width={420}
+                height={240}
+                loading="lazy"
+                decoding="async"
+              />
             </div>
-            <div className="grid gap-px bg-black/15 sm:grid-cols-2">
-              {strengths.map(([title, copy], index) => (
-                <article key={title} className="bg-paper p-7 sm:p-9">
-                  <span className="text-xs font-semibold tracking-wider text-ocean">
+            <div className="grid gap-px sm:grid-cols-2">
+              {strengths.map(({ title, copy, Icon }, index) => (
+                <article
+                  key={title}
+                  className="bg-paper p-7 sm:p-9 viewfinder-hover group relative overflow-hidden"
+                >
+                  {/* Top right icon (Watermark -> Active state on hover) */}
+                  {Icon && (
+                    <div className="absolute top-8 right-8 pointer-events-none text-ocean transition-all duration-300 ease-out opacity-15 scale-200 group-hover:opacity-100 group-hover:scale-100">
+                      <Icon
+                        className="w-6 h-6 sm:w-7 sm:h-7"
+                        strokeWidth={0.5}
+                      />
+                    </div>
+                  )}
+
+                  <span className="inline-block text-xs font-semibold group-hover:font-medium tracking-wider text-ocean transition-transform duration-300 ease-out origin-left group-hover:scale-200">
                     0{index + 1}
                   </span>
                   <h3 className="mt-8 text-xl font-semibold">{title}</h3>
@@ -269,9 +316,12 @@ export default function Home() {
               ].map(([Icon, title, text], index) => {
                 const I = Icon as typeof Compass;
                 return (
-                  <article key={String(title)}>
-                    <I className="size-7 text-ocean" />
-                    <span className="mt-10 block text-xs text-ink/35">
+                  <article
+                    key={String(title)}
+                    className="viewfinder-hover group relative rounded-lg border border-black/10 bg-paper p-7 sm:p-9"
+                  >
+                    <I className="size-14 text-ocean" strokeWidth={1} />
+                    <span className="mt-4 block text-xs text-ink/35">
                       0{index + 1}
                     </span>
                     <h3 className="mt-3 text-xl font-semibold">

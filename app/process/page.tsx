@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CtaBand } from "@/components/cta-band";
 import { Button } from "@/components/ui/button";
+import { ProcessStory } from "@/components/process-story";
 
 export const metadata: Metadata = {
   title: "How We Work",
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
     "See how Big Fish Collective understands each brief, builds considered matches, aligns expectations, and supports the work through delivery.",
 };
 
-const steps = [
+const steps: [string, string, string][] = [
   [
     "01",
     "Discovery",
@@ -76,12 +77,11 @@ export default function ProcessPage() {
             <p className="eyebrow">How we work · Hyderabad and beyond</p>
             <h1
               id="process-title"
-              className="mt-7 max-w-3xl font-sans text-[clamp(3.4rem,7.4vw,7.3rem)] font-medium leading-[0.88] tracking-[-0.075em]"
+              className="mt-7 max-w-3xl font-sans text-[clamp(3.4rem,6vw,7.3rem)] font-medium leading-[0.98] tracking-[-0.04em]"
             >
-              One clear process.{" "}
-              <span className="font-normal">Better work together.</span>
+              One clear process.&nbsp;Better work together.
             </h1>
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ink/65 sm:text-xl">
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink/65 sm:text-xl">
               Good matches depend on good information. We first understand the
               person or project, then manage the details that turn an
               introduction into a productive working relationship.
@@ -100,10 +100,11 @@ export default function ProcessPage() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="h-12 rounded-none border-ink px-6 text-ink hover:bg-ink hover:text-white"
+                className="h-12 rounded-none border-ink! px-6 text-ink! bg-black/5! hover:bg-ink! hover:text-white!"
               >
                 <Link href="#process-steps">
-                  See the Process <ArrowDown />
+                  See the Process{" "}
+                  <ArrowDown className="process-down-arrow size-4" />
                 </Link>
               </Button>
             </div>
@@ -116,7 +117,7 @@ export default function ProcessPage() {
               </p>
             </div>
           </div>
-          <div className="relative min-h-[390px] overflow-hidden bg-ink sm:min-h-[520px] lg:min-h-full">
+          <div className="relative min-h-97.5 overflow-hidden bg-ink sm:min-h-130 lg:min-h-full">
             <img
               src="/05-how-we-work-panel.png"
               alt="Two production professionals reviewing storyboards and planning a project."
@@ -142,35 +143,18 @@ export default function ProcessPage() {
         <div className="mx-auto max-w-360 px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
           <div className="grid gap-8 border-b border-white/20 pb-10 lg:grid-cols-[0.65fr_1fr] lg:items-end lg:pb-14">
             <p className="eyebrow text-white/50">The process</p>
-            <div>
-              <h2 className="max-w-4xl font-sans text-4xl font-medium leading-[1.02] tracking-[-0.055em] sm:text-6xl">
+            <div className="motion-process-intro">
+              <h2 className="motion-process-heading max-w-4xl font-sans text-4xl font-medium leading-[1.02] tracking-[-0.055em] sm:text-6xl">
                 From understanding the need to learning from the work.
               </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/60">
+              <p className="motion-process-summary mt-5 max-w-2xl text-lg leading-relaxed text-white/60">
                 The steps flex to the scale of the engagement. The focus stays
                 on a clear brief, a considered match, and good communication.
               </p>
             </div>
           </div>
 
-          <ol className="m-0 list-none p-0">
-            {steps.map(([number, title, copy]) => (
-              <li
-                key={number}
-                className="grid gap-5 border-b border-white/15 py-7 sm:grid-cols-[4.5rem_0.8fr_1.2fr] sm:gap-7 sm:py-9 lg:grid-cols-[6rem_0.8fr_1.2fr]"
-              >
-                <span className="text-sm tracking-[0.14em] text-white/45">
-                  {number}
-                </span>
-                <h3 className="font-sans text-2xl font-medium tracking-[-0.035em] sm:text-3xl">
-                  {title}
-                </h3>
-                <p className="max-w-2xl leading-relaxed text-white/60">
-                  {copy}
-                </p>
-              </li>
-            ))}
-          </ol>
+          <ProcessStory steps={steps} />
         </div>
       </section>
 
@@ -179,17 +163,20 @@ export default function ProcessPage() {
           <div className="grid gap-10 lg:grid-cols-[0.65fr_1fr]">
             <div>
               <p className="eyebrow">What guides us</p>
-              <h2 className="mt-5 max-w-xl font-sans text-4xl font-medium leading-[1.02] tracking-[-0.055em] sm:text-5xl">
+              <h2 className="mt-5 max-w-xl font-sans text-4xl font-medium leading-[1.02] tracking-[-0.025em] sm:text-6xl">
                 Good collaboration is built in the details.
               </h2>
             </div>
-            <div className="grid gap-px bg-black/15 sm:grid-cols-3">
+            <div className="motion-principle-grid grid gap-px bg-black/15 sm:grid-cols-3">
               {principles.map(([title, copy], index) => (
-                <article key={title} className="bg-white p-6 sm:p-7 lg:p-8">
-                  <span className="text-xs tracking-[0.16em] text-ink/40">
+                <article
+                  key={title}
+                  className="motion-principle-card bg-white p-6 sm:p-7 lg:p-8 viewfinder-hover group relative"
+                >
+                  <span className="inline-block text-xs font-semibold group-hover:font-medium tracking-wider text-ocean transition-transform duration-300 ease-out origin-left group-hover:scale-200">
                     0{index + 1}
                   </span>
-                  <h3 className="mt-8 text-xl font-semibold tracking-tight">
+                  <h3 className="mt-6 text-xl font-semibold tracking-tight">
                     {title}
                   </h3>
                   <p className="mt-3 leading-relaxed text-ink/60">{copy}</p>
@@ -201,17 +188,32 @@ export default function ProcessPage() {
       </section>
 
       <section className="bg-paper">
-        <div className="mx-auto grid max-w-360 gap-8 px-5 py-16 sm:px-8 lg:grid-cols-[0.65fr_1fr] lg:px-12 lg:py-20">
-          <p className="eyebrow">When plans change</p>
+        <div className="mx-auto grid max-w-360 gap-6 lg:gap-24 px-5 py-16 sm:px-8 lg:grid-cols-[0.65fr_0.9fr] lg:px-12 lg:py-20">
+          {/* Label with image directly underneath */}
           <div>
+            <p className="eyebrow lg:-mb-12 -mb-12 md:-mb-52">
+              When plans change
+            </p>
+
+            <img
+              src="/open_conversations_nobg.png"
+              alt="Production collaborators aligning project schedules and expectations."
+              loading="lazy"
+              className="motion-inline-illustration motion-parallax-media md:scale-95 lg:scale-125"
+            />
+          </div>
+
+          <div className="flex flex-col justify-center">
             <h2 className="max-w-3xl font-sans text-3xl font-medium leading-tight tracking-[-0.045em] sm:text-5xl">
               Keep the conversation open.
             </h2>
+
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink/60">
               Production plans and working relationships can shift. We return to
               the agreed brief and terms, clarify what has changed, and
               coordinate a practical next step with the people involved.
             </p>
+
             <div className="mt-7 flex flex-wrap gap-x-7 gap-y-3 text-sm font-medium">
               <Link
                 href="/talent"
@@ -219,6 +221,7 @@ export default function ProcessPage() {
               >
                 For Talent <ArrowUpRight className="size-4" />
               </Link>
+
               <Link
                 href="/partners"
                 className="inline-flex items-center gap-2 border-b border-black pb-1 transition-opacity hover:opacity-60"

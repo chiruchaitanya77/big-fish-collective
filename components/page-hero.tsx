@@ -15,7 +15,7 @@ export function PageHero({
       <section className="relative overflow-hidden border-b border-black bg-white">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-5 -top-16 text-[clamp(12rem,28vw,30rem)] font-bold leading-none tracking-[-0.1em] text-black/[0.035]"
+          className="pointer-events-none absolute -right-5 -top-16 text-[clamp(12rem,28vw,30rem)] font-bold leading-none tracking-widest text-black/[0.035]"
         >
           BFC
         </div>

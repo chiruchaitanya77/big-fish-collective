@@ -29,7 +29,7 @@ export function SiteAnalytics() {
         if (cancelled || !allowed() || !measurementId || !/^G-[A-Z0-9]+$/.test(measurementId)) return;
         const w = window as AnalyticsWindow;
         w.dataLayer = w.dataLayer || [];
-        w.gtag = function () { w.dataLayer!.push(arguments); };
+        w.gtag = function (...args: unknown[]) { w.dataLayer!.push(args); };
         w.gtag("js", new Date());
         w.gtag("config", measurementId, {send_page_view: false, allow_google_signals: false, allow_ad_personalization_signals: false});
         w.gtag("event", "page_view", {page_location: window.location.origin + window.location.pathname, page_referrer: ""});
@@ -39,7 +39,9 @@ export function SiteAnalytics() {
         document.head.appendChild(script);
       } catch { /* Analytics never blocks the website. */ }
     }
-    try { setShowChoice(!localStorage.getItem(preferenceKey) && navigator.doNotTrack !== "1"); } catch { /* Browsing remains available without storage. */ }
+    const choiceTimer = window.setTimeout(() => {
+      try { setShowChoice(!localStorage.getItem(preferenceKey) && navigator.doNotTrack !== "1"); } catch { /* Browsing remains available without storage. */ }
+    }, 0);
     void start();
     const openSettings = () => setShowChoice(true);
     const click = (event: MouseEvent) => {
@@ -53,7 +55,7 @@ export function SiteAnalytics() {
     };
     document.addEventListener("click", click);
     window.addEventListener("bfc:analytics-settings", openSettings);
-    return () => {cancelled = true; document.removeEventListener("click", click); window.removeEventListener("bfc:analytics-settings", openSettings);};
+    return () => {clearTimeout(choiceTimer); cancelled = true; document.removeEventListener("click", click); window.removeEventListener("bfc:analytics-settings", openSettings);};
   }, []);
   function choose(value: string) {
     try { localStorage.setItem(preferenceKey, value); } catch { setShowChoice(false); return; }

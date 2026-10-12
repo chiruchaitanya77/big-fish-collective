@@ -74,7 +74,7 @@ export default function PartnersPage() {
   return (
     <main>
       <section
-        className="relative min-h-[700px] overflow-hidden bg-deep-ocean text-white sm:min-h-[780px]"
+        className="relative min-h-svh overflow-hidden bg-deep-ocean text-white"
         aria-labelledby="partners-title"
       >
         <SiteHeader overlay />
@@ -89,14 +89,15 @@ export default function PartnersPage() {
           fetchPriority="high"
         />
         <div className="hero-scrim absolute inset-0" aria-hidden="true" />
-        <div className="relative mx-auto flex min-h-[700px] max-w-360 items-end px-5 pb-16 pt-32 sm:min-h-[780px] sm:px-8 lg:px-12 lg:pb-20">
+        <div className="relative mx-auto flex min-h-175 max-w-360 items-end px-5 pb-16 pt-32 sm:min-h-195 sm:px-8 lg:px-12 lg:pb-20">
           <div className="max-w-4xl">
             <p className="eyebrow text-white/65">
               For partners · Hyderabad and beyond
             </p>
             <h1
               id="partners-title"
-              className="mt-6 max-w-4xl font-sans text-[clamp(3.75rem,9vw,8.5rem)] font-medium leading-[0.86] tracking-[-0.075em]"
+              className="mt-6 max-w-4xl font-sans text-[clamp(3.75rem,8vw,8.5rem)] font-medium leading-[0.92] tracking-[-0.025em]"
+              // className="mt-6 max-w-4xl font-sans font-medium text-[clamp(4rem,9vw,9rem)] leading-[0.98] tracking-[-0.015em]"
             >
               The right talent.
               <br />
@@ -121,10 +122,11 @@ export default function PartnersPage() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="h-12 rounded-none border-white bg-black/20 px-6 text-white hover:bg-white hover:text-ink"
+                className="group h-12 rounded-none border-white bg-black/20 px-6 text-white hover:bg-white! hover:text-ink"
               >
                 <Link href="#partner-process">
-                  How We Work <ArrowDown />
+                  How We Work
+                  <ArrowDown className="process-down-arrow size-4" />
                 </Link>
               </Button>
             </div>
@@ -134,19 +136,49 @@ export default function PartnersPage() {
             aria-label="Scroll to partner services"
             className="absolute bottom-8 right-5 grid size-12 place-items-center border border-white/50 text-white/80 transition-colors hover:bg-white hover:text-ink sm:right-8 lg:right-12"
           >
-            <ArrowDown className="size-5" />
+            <ArrowDown className="process-down-arrow size-5" />
           </a>
         </div>
       </section>
 
-      <section id="partner-introduction" className="bg-white">
+      {/* <section id="partner-introduction" className="bg-white">
         <div className="mx-auto grid max-w-360 gap-9 px-5 py-20 sm:px-8 lg:grid-cols-[0.48fr_1fr] lg:px-12 lg:py-28">
           <p className="eyebrow text-ocean">Who we support</p>
           <div>
-            <h2 className="section-title max-w-5xl">
+            <h2 className="section-title max-w-5xl tracking-[-0.035em]!">
               For the people bringing the next production to life.
             </h2>
-            <p className="mt-7 max-w-3xl text-lg leading-relaxed text-ink/65 sm:text-xl">
+            <p className="mt-4 max-w-3xl text-lg leading-relaxed text-ink/65 sm:text-xl">
+              We work with production houses, studios, filmmakers, OTT teams,
+              casting directors, creative agencies, brands, and content
+              companies. Support can cover one specialist role, a focused
+              shortlist, or multiple departments across a production.
+            </p>
+          </div>
+        </div>
+      </section> */}
+
+      <section id="partner-introduction" className="bg-white">
+        <div className="mx-auto grid max-w-360 grid-cols-1 gap-8 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-[0.98fr_1fr] lg:gap-12 lg:px-12 lg:py-28">
+          <div className="flex flex-col gap-5">
+            <p className="eyebrow text-ocean">Who we support</p>
+
+            <div className="w-full overflow-hidden">
+              <img
+                src="/we_support.png"
+                alt="Illustration of film production professionals and filmmaking equipment"
+                className="block h-auto w-full object-contain object-left scale-x-110"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <div className="min-w-0">
+            <h2 className="section-title max-w-5xl tracking-[-0.035em]!">
+              For the people bringing the next production to life.
+            </h2>
+
+            <p className="mt-4 max-w-3xl text-base leading-relaxed text-ink/65 sm:text-lg lg:text-xl">
               We work with production houses, studios, filmmakers, OTT teams,
               casting directors, creative agencies, brands, and content
               companies. Support can cover one specialist role, a focused
@@ -161,17 +193,20 @@ export default function PartnersPage() {
           <div className="grid gap-10 lg:grid-cols-[0.65fr_1fr]">
             <div>
               <p className="eyebrow text-white/45">What we can handle</p>
-              <h2 className="section-title mt-5 max-w-xl">
+              <h2 className="section-title mt-5 max-w-xl tracking-[-0.005em]!">
                 A focused search, managed end to end.
               </h2>
             </div>
             <div className="grid gap-px bg-white/15 sm:grid-cols-2">
               {capabilities.map(([title, copy], index) => (
-                <article key={title} className="bg-ink p-6 sm:p-8">
-                  <span className="text-xs tracking-wider text-white/45">
+                <article
+                  key={title}
+                  className="bg-ink p-6 sm:p-8 viewfinder-hover group relative"
+                >
+                  <span className="inline-block text-xs font-semibold group-hover:font-medium tracking-wider text-white/75 transition-transform duration-300 ease-out origin-left group-hover:scale-200">
                     0{index + 1}
                   </span>
-                  <h3 className="mt-8 text-xl font-semibold tracking-tight">
+                  <h3 className="mt-6 text-xl font-semibold tracking-tight">
                     {title}
                   </h3>
                   <p className="mt-3 leading-relaxed text-white/60">{copy}</p>
@@ -193,11 +228,14 @@ export default function PartnersPage() {
             </div>
             <div className="grid gap-px bg-black/15 sm:grid-cols-2">
               {reasons.map(([title, copy], index) => (
-                <article key={title} className="bg-paper p-6 sm:p-8">
-                  <span className="text-xs tracking-wider text-ocean">
+                <article
+                  key={title}
+                  className="bg-paper p-6 sm:p-8 viewfinder-hover group relative"
+                >
+                  <span className="inline-block text-xs font-semibold group-hover:font-medium tracking-wider text-ocean transition-transform duration-300 ease-out origin-left group-hover:scale-200">
                     0{index + 1}
                   </span>
-                  <h3 className="mt-7 text-xl font-semibold tracking-tight">
+                  <h3 className="mt-4 text-xl font-semibold tracking-tight">
                     {title}
                   </h3>
                   <p className="mt-3 leading-relaxed text-ink/60">{copy}</p>
@@ -248,7 +286,7 @@ export default function PartnersPage() {
         </div>
       </section>
 
-      <section className="bg-ink text-white">
+      {/* <section className="bg-ink text-white">
         <div className="mx-auto grid max-w-360 gap-9 px-5 py-16 sm:px-8 lg:grid-cols-[0.8fr_1fr] lg:items-end lg:px-12 lg:py-24">
           <div>
             <p className="eyebrow text-white/45">When plans change</p>
@@ -263,7 +301,7 @@ export default function PartnersPage() {
             continuity.
           </p>
         </div>
-      </section>
+      </section> */}
 
       <CtaBand
         title="Tell us who your project needs"

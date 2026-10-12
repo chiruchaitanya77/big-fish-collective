@@ -30,8 +30,8 @@ export function CinematicIntro() {
 
   useEffect(() => {
     if (hasSeenIntro()) {
-      setPhase("done");
-      return;
+      const doneTimer = window.setTimeout(() => setPhase("done"), 0);
+      return () => window.clearTimeout(doneTimer);
     }
 
     const reduceMotion = window.matchMedia(
@@ -44,7 +44,7 @@ export function CinematicIntro() {
       return () => window.clearTimeout(reducedMotionTimer);
     }
 
-    setPhase("loading");
+    const loadingTimer = window.setTimeout(() => setPhase("loading"), 0);
     document.body.classList.add("intro-active");
     const revealTimer = window.setTimeout(
       () => setPhase("revealing"),
@@ -56,6 +56,7 @@ export function CinematicIntro() {
     );
 
     return () => {
+      window.clearTimeout(loadingTimer);
       window.clearTimeout(revealTimer);
       window.clearTimeout(doneTimer);
       if (skipTimerRef.current !== null) {

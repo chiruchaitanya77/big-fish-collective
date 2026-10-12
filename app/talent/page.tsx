@@ -87,27 +87,27 @@ export default function TalentPage() {
   return (
     <main>
       <section
-        className="relative min-h-[720px] overflow-hidden bg-deep-ocean text-white sm:min-h-[780px]"
+        className="relative min-h-screen overflow-hidden bg-deep-ocean text-white"
         aria-labelledby="talent-title"
       >
         <SiteHeader overlay />
         <img
-          src="/02-for-talent-hero.png"
+          src="/talent-hero.png"
           alt="A performer listening thoughtfully during a studio rehearsal."
           className="absolute inset-0 h-full w-full object-cover object-[68%_center]"
           width={1672}
           height={941}
-          style={{ objectPosition: "72% 50%" }}
+          style={{ objectPosition: "72% 10%" }}
           decoding="async"
           fetchPriority="high"
         />
         <div className="hero-scrim absolute inset-0" aria-hidden="true" />
-        <div className="relative mx-auto flex min-h-[720px] max-w-360 items-end px-5 pb-16 pt-32 sm:min-h-[780px] sm:px-8 lg:px-12 lg:pb-20">
+        <div className="relative mx-auto flex min-h-180 max-w-360 items-end px-5 pb-16 pt-32 sm:min-h-195 sm:px-8 lg:px-12 lg:pb-20">
           <div className="max-w-4xl">
             <p className="eyebrow text-white/65">For talent · Worldwide</p>
             <h1
               id="talent-title"
-              className="mt-6 max-w-4xl font-sans text-[clamp(3.75rem,9vw,8.5rem)] font-medium leading-[0.86] tracking-[-0.075em]"
+              className="mt-6 max-w-4xl font-sans text-[clamp(3.75rem,9vw,8.5rem)] font-medium leading-[0.92] tracking-[-0.035em]"
             >
               Build a career{" "}
               <span className="font-normal">with direction.</span>
@@ -131,10 +131,11 @@ export default function TalentPage() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="h-12 rounded-none border-white bg-black/20 px-6 text-white hover:bg-white hover:text-ink"
+                className="group h-12 rounded-none border-white bg-black/20 px-6 text-white hover:bg-white! hover:text-ink"
               >
                 <Link href="#representation-process">
-                  See How It Works <ArrowDown />
+                  See How It Works{" "}
+                  <ArrowDown className="process-down-arrow size-4" />
                 </Link>
               </Button>
             </div>
@@ -144,7 +145,7 @@ export default function TalentPage() {
             aria-label="Scroll to talent representation"
             className="absolute bottom-8 right-5 grid size-12 place-items-center border border-white/50 text-white/80 transition-colors hover:bg-white hover:text-ink sm:right-8 lg:right-12"
           >
-            <ArrowDown className="size-5" />
+            <ArrowDown className="process-down-arrow size-5" />
           </a>
         </div>
       </section>
@@ -183,11 +184,14 @@ export default function TalentPage() {
             </div>
             <div className="grid gap-px bg-white/15 sm:grid-cols-2">
               {disciplines.map(([title, copy], index) => (
-                <article key={title} className="bg-ink p-6 sm:p-8">
-                  <span className="text-xs tracking-wider text-white/45">
+                <article
+                  key={title}
+                  className="bg-ink p-6 sm:p-8 viewfinder-hover group relative"
+                >
+                  <span className="inline-block text-xs font-semibold group-hover:font-medium tracking-wider text-white/75 transition-transform duration-300 ease-out origin-left group-hover:scale-200">
                     0{index + 1}
                   </span>
-                  <h3 className="mt-8 text-xl font-semibold tracking-tight">
+                  <h3 className="mt-6 text-xl font-semibold tracking-tight">
                     {title}
                   </h3>
                   <p className="mt-3 leading-relaxed text-white/60">{copy}</p>
@@ -246,7 +250,7 @@ export default function TalentPage() {
       </section>
 
       <section id="representation-process" className="bg-paper">
-        <div className="mx-auto max-w-360 px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+        <div className="mx-auto max-w-360 px-5 py-24 sm:px-8 lg:px-12 lg:py-32">
           <div className="grid gap-10 lg:grid-cols-[0.65fr_1fr]">
             <div>
               <p className="eyebrow text-ocean">Representation process</p>

@@ -1,7 +1,15 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { AlertCircle, ArrowUpRight, Check, LoaderCircle } from "lucide-react";
+import {
+  AlertCircle,
+  ArrowUpRight,
+  BriefcaseBusiness,
+  Check,
+  Clapperboard,
+  LoaderCircle,
+  UserRound,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -45,6 +53,7 @@ function EnquiryForm({ kind }: { kind: EnquiryKind }) {
   const [error, setError] = useState("");
   const isTalent = kind === "talent";
   const prefix = isTalent ? "talent" : "partner";
+  const successRef = useRef<HTMLDivElement>(null);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -104,9 +113,21 @@ function EnquiryForm({ kind }: { kind: EnquiryKind }) {
     }
   }
 
+  useEffect(() => {
+    if (state === "success") {
+      successRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [state]);
+
   if (state === "success") {
     return (
-      <div className="grid min-h-[34rem] place-content-center border border-black bg-black p-8 text-center text-white sm:p-14">
+      <div
+        ref={successRef}
+        className="grid min-h-136 scroll-mt-20 place-content-center border border-black bg-black p-8 text-center text-white sm:p-14"
+      >
         <span className="mx-auto grid size-16 place-items-center rounded-full border border-white">
           <Check className="size-7" />
         </span>
@@ -125,7 +146,7 @@ function EnquiryForm({ kind }: { kind: EnquiryKind }) {
           type="button"
           variant="outline"
           onClick={() => setState("idle")}
-          className="mx-auto mt-8 rounded-none border-white bg-transparent text-white hover:bg-white hover:text-black"
+          className="mx-auto mt-8 rounded-none border-white! text-white! hover:bg-white! hover:text-black!"
         >
           Send another {isTalent ? "application" : "brief"}
         </Button>
@@ -148,7 +169,10 @@ function EnquiryForm({ kind }: { kind: EnquiryKind }) {
       >
         <div className="grid gap-x-6 gap-y-6 sm:grid-cols-2">
           <div className="sm:col-span-2">
-            <p className="eyebrow text-black/45">Your details</p>
+            <p className="eyebrow text-black/45 flex items-center gap-2">
+              <UserRound size={16} strokeWidth={1.8} />
+              Your details
+            </p>
           </div>
           <div>
             <FieldLabel htmlFor={`${prefix}-name`}>Full name</FieldLabel>
@@ -203,7 +227,12 @@ function EnquiryForm({ kind }: { kind: EnquiryKind }) {
             />
           </div>
           <div className="sm:col-span-2 mt-2 border-t border-black/15 pt-6">
-            <p className="eyebrow text-black/45">
+            <p className="eyebrow text-black/45 flex items-center gap-2">
+              {isTalent ? (
+                <BriefcaseBusiness size={16} strokeWidth={1.8} />
+              ) : (
+                <Clapperboard size={16} strokeWidth={1.8} />
+              )}
               {isTalent ? "Your practice" : "Your production"}
             </p>
           </div>
@@ -358,7 +387,7 @@ function EnquiryForm({ kind }: { kind: EnquiryKind }) {
         <p className="eyebrow text-white/45">
           {isTalent ? "Before you apply" : "A useful brief"}
         </p>
-        <h3 className="mt-5 text-2xl font-semibold leading-tight tracking-[-0.035em]">
+        <h3 className="mt-2 text-2xl font-semibold leading-tight tracking-[-0.035em]">
           {isTalent
             ? "Introduce yourself in your own way."
             : "Start with the details you have."}
@@ -377,7 +406,7 @@ function EnquiryForm({ kind }: { kind: EnquiryKind }) {
               ]
           ).map((item, index) => (
             <li key={item} className="grid grid-cols-[1.5rem_1fr] gap-3">
-              <span className="text-xs tracking-[0.12em] text-white/40">
+              <span className="text-xs tracking-[0.12em] font-semibold mt-2 text-white">
                 0{index + 1}
               </span>
               <span>{item}</span>
@@ -385,7 +414,7 @@ function EnquiryForm({ kind }: { kind: EnquiryKind }) {
           ))}
         </ul>
         {isTalent && (
-          <p className="mt-7 border-t border-white/20 pt-6 text-xs leading-relaxed text-white/45">
+          <p className="mt-7 border-t border-white/20 pt-6 text-xs leading-relaxed text-white/70!">
             Applications are reviewed for fit. Sending an application does not
             guarantee representation or work.
           </p>
@@ -444,18 +473,18 @@ export function EnquiryForms() {
               </p>
             </div>
             <TabsList
-              className="h-auto w-full rounded-none border border-black bg-white p-0 lg:w-auto"
+              className="h-14! w-full rounded-none border border-black bg-white py-0 px-1 lg:w-auto"
               aria-label="Choose the right form"
             >
               <TabsTrigger
                 value="partner"
-                className="h-12 rounded-none px-5 text-base data-[state=active]:bg-black data-[state=active]:text-white"
+                className="h-12 rounded-none px-5 text-base data-[state=active]:bg-black! data-[state=active]:text-white!"
               >
                 I’m hiring
               </TabsTrigger>
               <TabsTrigger
                 value="talent"
-                className="h-12 rounded-none px-5 text-base data-[state=active]:bg-black data-[state=active]:text-white"
+                className="h-12 rounded-none px-5 text-base data-[state=active]:bg-black! data-[state=active]:text-white!"
               >
                 I’m talent
               </TabsTrigger>

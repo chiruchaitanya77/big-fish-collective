@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "@/components/site-link";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Handshake, Users } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CtaBand } from "@/components/cta-band";
@@ -77,12 +77,12 @@ export default function ServicesPage() {
       <SiteHeader />
 
       <section className="bg-white" aria-labelledby="services-title">
-        <div className="mx-auto grid max-w-360 lg:min-h-[690px] lg:grid-cols-[1.02fr_0.98fr]">
+        <div className="mx-auto grid max-w-360 lg:min-h-svh lg:grid-cols-[1.02fr_0.98fr]">
           <div className="flex flex-col justify-center px-5 pb-14 pt-16 sm:px-8 sm:pb-20 lg:px-12 lg:py-24">
             <p className="eyebrow">Services · Hyderabad and beyond</p>
             <h1
               id="services-title"
-              className="mt-7 max-w-3xl font-sans text-[clamp(3.4rem,7.4vw,7.3rem)] font-medium leading-[0.88] tracking-[-0.075em]"
+              className="mt-7 max-w-3xl font-sans text-[clamp(3.75rem,7vw,8.5rem)] font-medium leading-[0.92] tracking-[-0.025em]"
             >
               Good work starts with the{" "}
               <span className="font-normal">right support.</span>
@@ -106,15 +106,18 @@ export default function ServicesPage() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="h-12 rounded-none border-ink px-6 text-ink hover:bg-ink hover:text-white"
+                className="h-12 rounded-none border-ink! px-6 text-ink! bg-black/5! hover:bg-ink! hover:text-white!"
               >
                 <Link href="#service-index">
-                  Explore Services <ArrowDown />
+                  Explore Services{" "}
+                  <ArrowDown className="process-down-arrow size-4" />
                 </Link>
               </Button>
             </div>
+
             <div className="mt-14 grid max-w-xl grid-cols-2 gap-5 border-t border-black/15 pt-5 text-sm text-ink/55 sm:mt-20">
               <div>
+                <Users size={26} strokeWidth={1.2} className="mb-2 text-ink" />
                 <span className="block text-2xl font-medium tracking-tight text-ink">
                   For talent
                 </span>
@@ -122,7 +125,13 @@ export default function ServicesPage() {
                   Build a career with direction.
                 </span>
               </div>
+
               <div>
+                <Handshake
+                  size={26}
+                  strokeWidth={1.2}
+                  className="mb-2 text-ink"
+                />
                 <span className="block text-2xl font-medium tracking-tight text-ink">
                   For partners
                 </span>
@@ -130,7 +139,7 @@ export default function ServicesPage() {
               </div>
             </div>
           </div>
-          <div className="relative min-h-[390px] overflow-hidden bg-ink sm:min-h-[520px] lg:min-h-full">
+          <div className="relative min-h-97.5 overflow-hidden bg-ink sm:min-h-130 lg:min-h-full">
             <img
               src="/04-services-panel.png"
               alt="A camera technician adjusting the focus of a cinema camera."
@@ -155,9 +164,22 @@ export default function ServicesPage() {
       <section id="service-index" className="scroll-mt-20 bg-ink text-white">
         <div className="mx-auto max-w-360 px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
           <div className="grid gap-8 border-b border-white/20 pb-10 lg:grid-cols-[0.65fr_1fr] lg:items-end lg:pb-14">
-            <p className="eyebrow text-white/50">What we do</p>
+            <div className="relative min-h-52 overflow-hidden border border-white/15 bg-black sm:min-h-60">
+              <img
+                src="/services-craft-illustration.png"
+                alt="A monochrome editorial still life of cameras, a studio light, and a clapperboard."
+                className="motion-parallax-media absolute inset-0 h-full w-full object-cover opacity-65 mix-blend-screen grayscale"
+                width={1024}
+                height={1536}
+                loading="lazy"
+                decoding="async"
+              />
+              <p className="eyebrow relative z-10 p-2 text-white bg-black/60 w-fit">
+                What we do
+              </p>
+            </div>
             <div>
-              <h2 className="max-w-4xl font-sans text-4xl font-medium leading-[1.02] tracking-[-0.055em] sm:text-6xl">
+              <h2 className="max-w-4xl font-sans text-4xl font-medium leading-[1.02] tracking-[-0.015em] sm:text-6xl">
                 A connected set of services, shaped around the work.
               </h2>
               <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/60">
@@ -167,21 +189,21 @@ export default function ServicesPage() {
             </div>
           </div>
 
-          <div className="grid gap-px bg-white/15 sm:grid-cols-2">
+          <div className="grid gap-px sm:grid-cols-2">
             {services.map((service) => (
               <article
                 key={service.number}
-                className="group flex min-h-[290px] flex-col bg-ink p-6 sm:p-8 lg:min-h-[320px] lg:p-10"
+                className="group flex min-h-72.5 flex-col bg-ink p-6 sm:p-8 lg:min-h-80 lg:p-10"
               >
-                <div className="flex items-center justify-between gap-4">
-                  <span className="text-xs tracking-[0.16em] text-white/45">
+                <div className="flex items-center justify-between gap-4 pb-2 border-b border-white/20">
+                  <span className="text-xs tracking-[0.16em] text-white/45 group-hover:text-white group-hover:text-[14px] transition-all">
                     {service.number}
                   </span>
-                  <span className="text-right text-xs uppercase tracking-[0.14em] text-white/45">
+                  <span className="text-right text-xs uppercase tracking-[0.14em] text-white/45 group-hover:text-white group-hover:text-[14px] transition-all">
                     {service.audience}
                   </span>
                 </div>
-                <h3 className="mt-9 max-w-md font-sans text-2xl font-medium leading-tight tracking-[-0.035em] sm:text-3xl">
+                <h3 className="mt-9 max-w-md font-sans text-2xl font-medium leading-tight tracking-[-0.015em] sm:text-3xl">
                   {service.title}
                 </h3>
                 <p className="mt-4 max-w-xl leading-relaxed text-white/60">
@@ -189,7 +211,7 @@ export default function ServicesPage() {
                 </p>
                 <Link
                   href={service.href}
-                  className="mt-auto flex w-fit items-center gap-2 pt-8 text-sm font-medium text-white transition-colors hover:text-white/65 focus-visible:outline-white"
+                  className="mt-auto flex w-fit items-center gap-2 pt-8 text-sm font-medium text-white! transition-colors hover:text-white/65 hover:underline hover:underline-offset-4 focus-visible:outline-white"
                 >
                   {service.action}
                   <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -200,23 +222,38 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="bg-white">
-        <div className="mx-auto grid max-w-360 gap-8 px-5 py-16 sm:px-8 lg:grid-cols-[0.65fr_1fr] lg:px-12 lg:py-20">
-          <p className="eyebrow">How to begin</p>
+      <section className="bg-paper">
+        <div className="mx-auto grid max-w-360 gap-6 lg:gap-24 px-5 py-16 sm:px-8 lg:grid-cols-[0.65fr_0.9fr] lg:px-12 lg:py-20">
+          {/* Label with image directly underneath */}
           <div>
+            <p className="eyebrow lg:-mb-12 -mb-12 md:-mb-52">How to begin</p>
+
+            <img
+              src="/how_to_begin.png"
+              alt="Production collaborators aligning project schedules and expectations."
+              loading="lazy"
+              className="motion-inline-illustration motion-parallax-media md:scale-95 lg:scale-100"
+            />
+          </div>
+
+          <div className="flex flex-col justify-center">
             <h2 className="max-w-3xl font-sans text-3xl font-medium leading-tight tracking-[-0.045em] sm:text-5xl">
               Tell us what you are working toward.
             </h2>
+
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink/60">
               Share the role, production, career question, or support you need.
               We will come back with a clear next step.
             </p>
-            <Link
-              href="/contact"
-              className="mt-7 inline-flex items-center gap-2 border-b border-black pb-1 text-sm font-medium transition-opacity hover:opacity-60"
-            >
-              Discuss Your Requirement <ArrowUpRight className="size-4" />
-            </Link>
+
+            <div className="mt-7 flex flex-wrap gap-x-7 gap-y-3 text-sm font-medium">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 border-b border-black pb-1 transition-opacity hover:opacity-60"
+              >
+                Discuss Your Requirement <ArrowUpRight className="size-4" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
