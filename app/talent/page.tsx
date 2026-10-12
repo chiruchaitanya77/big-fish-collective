@@ -293,7 +293,7 @@ export default function TalentPage() {
         <div className="mx-auto grid max-w-360 gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[1fr_auto] lg:items-end lg:px-12 lg:py-20">
           <div>
             <p className="eyebrow text-white/55">Join the collective</p>
-            <h2 className="mt-4 max-w-3xl font-sans text-4xl font-medium leading-tight tracking-[-0.055em] sm:text-6xl">
+            <h2 className="mt-4 max-w-3xl font-sans text-4xl font-medium leading-tight tracking-[-0.015em] sm:text-5xl">
               Ready to look beyond the next job?
             </h2>
             <p className="mt-5 max-w-2xl text-lg text-white/70">
@@ -301,17 +301,29 @@ export default function TalentPage() {
               right time.
             </p>
           </div>
-          <Button
-            asChild
-            size="lg"
-            className="h-12 rounded-none bg-white px-6 text-ink hover:bg-white/85"
-          >
-            <Link href="/contact#talent-application">
-              Apply for Representation <ArrowUpRight />
-            </Link>
-          </Button>
+
+          <div className="flex flex-wrap gap-3">
+            <Button
+              asChild
+              size="lg"
+              className="h-12 rounded-none bg-white px-6 text-ink hover:bg-white/85"
+            >
+              <Link href="/contact#talent-application">
+                Apply for Representation <ArrowUpRight />
+              </Link>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="h-12 rounded-none border-white/40! bg-transparent px-6 text-white hover:bg-white! hover:text-ink"
+            >
+              <Link href="/contact">Speak to Our Team</Link>
+            </Button>
+          </div>
         </div>
       </section>
+
       <SiteFooter />
     </main>
   );
