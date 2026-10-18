@@ -23,7 +23,7 @@
     {
       "binding": "DB",
       "database_name": "big-fish-collective-enquiries",
-      "database_id": "00000000-0000-4000-8000-000000000000",
+      "database_id": "ca1e1593-a14d-4e8b-8d8b-954096d958d4",
       "migrations_dir": "drizzle"
     }
   ],

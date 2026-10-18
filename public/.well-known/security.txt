@@ -1,0 +1,4 @@
+Contact: mailto:chiruchaitanya77@gmail.com
+Preferred-Languages: en
+Canonical: https://big-fish-collective.bigfishcollective.workers.dev/.well-known/security.txt
+Expires: 2027-10-15T00:00:00.000Z

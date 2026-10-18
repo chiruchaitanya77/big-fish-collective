@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "@/components/site-link";
 import {
   ArrowDown,
@@ -16,6 +17,30 @@ import { SiteFooter } from "@/components/site-footer";
 import { CtaBand } from "@/components/cta-band";
 import { Button } from "@/components/ui/button";
 import { FilmTicker } from "@/components/film-ticker";
+
+export const metadata: Metadata = {
+  title: "Talent Representation, Casting & Crew Sourcing",
+  description:
+    "Discover Big Fish Collective, a Hyderabad-based talent collective representing cast and crew and connecting producers, studios, agencies, and brands with creative talent.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Big Fish Collective | Talent Representation & Casting",
+    description:
+      "We represent ambitious cast and crew and connect creative partners with people who fit the work, timeline, and team.",
+    url: "/",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Big Fish Collective — talent representation and casting",
+      },
+    ],
+  },
+};
 
 const strengths = [
   {
