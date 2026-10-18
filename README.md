@@ -112,16 +112,30 @@ The private dashboard is available at `/admin`. It shows consented, aggregate vi
 
 Clicking an enquiry opens the complete submitted brief/application in a drawer. Enquiry status is intentionally one-way: `Received → Responded → Closed`. Each move requires reviewing and confirming the exact email template, sends that email to the person who submitted the form, and records the transition in the enquiry timeline. If email delivery is unavailable, the status remains unchanged so the team does not appear to have responded when no message was sent.
 
-Before the first deployment, add the initial core-developer account as Worker secrets. Use a real email address and a unique password of at least 16 characters:
+Before deploying, add the initial core-developer account as encrypted Cloudflare Worker secrets. These commands target the database/Worker configuration in [`wrangler.hosting.json`](./wrangler.hosting.json); they prompt you for the values, so the password is never written into that file:
 
 ```sh
 pnpm exec wrangler secret put SUPER_ADMIN_EMAIL --config wrangler.hosting.json
 pnpm exec wrangler secret put SUPER_ADMIN_PASSWORD --config wrangler.hosting.json
 ```
 
-The first successful login seeds that account as the super admin. Super admins can create additional admin and super-admin accounts, suspend access, change roles, and review each account's last sign-in. Passwords are salted and PBKDF2-hashed; the browser receives only a `Secure`, `HttpOnly`, same-site session cookie that lasts for 14 days or until the account is suspended or signs out. Keep both bootstrap secrets out of source control; once the initial account works, remove the two bootstrap secrets from the Worker because the stored account is independent of them.
+When prompted, enter the core developer email and a unique password of at least 16 characters. Then apply the database migration and deploy the Worker:
 
-For development only, put values in an ignored `.dev.vars` file beside the configuration used by your dev command. Never add that file to the ZIP, a Git repository or the public folder.
+```sh
+pnpm run db:remote
+pnpm run hosting:deploy
+```
+
+The first successful login seeds that account as the super admin. Super admins can create additional admin and super-admin accounts, suspend access, change roles, and review each account's last sign-in. Passwords are salted and PBKDF2-hashed; the browser receives only a `Secure`, `HttpOnly`, same-site session cookie that lasts for 14 days or until the account is suspended or signs out. Do not add these values to `wrangler.hosting.json`, `.env` committed files, Git, or the public folder. Once the initial account has been seeded, the bootstrap secrets can be removed from the Worker; the stored account remains available.
+
+For local development only, put the same values in an ignored `.dev.vars` file beside the project root (not in `wrangler.hosting.json`):
+
+```dotenv
+SUPER_ADMIN_EMAIL=core-developer@example.com
+SUPER_ADMIN_PASSWORD=replace-with-a-unique-16-character-password
+```
+
+Never add `.dev.vars` to the ZIP, a Git repository, or the public folder.
 
 ## Database files and backups
 
