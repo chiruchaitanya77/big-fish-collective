@@ -1,28 +1,46 @@
 "use client";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { eventNames, pagePaths } from "@/lib/analytics";
 
 type AnalyticsWindow = Window & {dataLayer?: unknown[]; gtag?: (...args: unknown[]) => void};
 const preferenceKey = "bfc-analytics-consent";
+const visitorCookie = "bfc_visitor_id";
+const visitorIdPattern = /^[0-9a-f-]{36}$/i;
 function allowed() {
   try { return localStorage.getItem(preferenceKey) === "accepted" && navigator.doNotTrack !== "1"; } catch { return false; }
+}
+function visitorId() {
+  try {
+    const existing = document.cookie.split(";").map((part) => part.trim()).find((part) => part.startsWith(`${visitorCookie}=`))?.slice(visitorCookie.length + 1) || "";
+    if (visitorIdPattern.test(existing)) return existing;
+    const created = crypto.randomUUID();
+    document.cookie = `${visitorCookie}=${created}; Max-Age=31536000; Path=/; SameSite=Lax${window.location.protocol === "https:" ? "; Secure" : ""}`;
+    return created;
+  } catch { return ""; }
+}
+function clearVisitorId() {
+  try { document.cookie = `${visitorCookie}=; Max-Age=0; Path=/; SameSite=Lax`; } catch { /* Analytics remains optional. */ }
 }
 export function trackEvent(event: string) {
   if (!allowed() || !eventNames.includes(event)) return;
   const path = window.location.pathname.replace(/\/$/, "") || "/";
   if (!pagePaths.includes(path)) return;
-  if (!event.endsWith("_success")) void fetch("/api/analytics", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({event, path}), keepalive: true}).catch(() => {});
+  if (!event.endsWith("_success")) void fetch("/api/analytics", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({event, path, visitorId: visitorId()}), keepalive: true}).catch(() => {});
   (window as AnalyticsWindow).gtag?.("event", event, {page_location: window.location.origin + path, page_path: path});
 }
 export function AnalyticsSettings() {
   return <button type="button" className="text-xs underline underline-offset-4" onClick={() => window.dispatchEvent(new Event("bfc:analytics-settings"))}>Analytics preferences</button>;
 }
 export function SiteAnalytics() {
+  const pathname = usePathname();
   const [showChoice, setShowChoice] = useState(false);
   useEffect(() => {
+    if (pathname.startsWith("/admin")) return;
     let cancelled = false;
     async function start() {
       if (!allowed()) return;
+      visitorId();
       trackEvent("page_view");
       try {
         const {measurementId} = await fetch("/api/analytics-config").then(r => r.json()) as {measurementId: string | null};
@@ -56,12 +74,12 @@ export function SiteAnalytics() {
     document.addEventListener("click", click);
     window.addEventListener("bfc:analytics-settings", openSettings);
     return () => {clearTimeout(choiceTimer); cancelled = true; document.removeEventListener("click", click); window.removeEventListener("bfc:analytics-settings", openSettings);};
-  }, []);
+  }, [pathname]);
   function choose(value: string) {
-    try { localStorage.setItem(preferenceKey, value); } catch { setShowChoice(false); return; }
+    try { localStorage.setItem(preferenceKey, value); if (value !== "accepted") clearVisitorId(); } catch { setShowChoice(false); return; }
     window.location.reload();
   }
-  if (!showChoice) return null;
+  if (pathname.startsWith("/admin") || !showChoice) return null;
   return <aside aria-label="Analytics preferences" className="fixed bottom-4 left-4 right-4 z-[100] max-w-xl border border-black bg-white p-5 text-black shadow-xl sm:left-auto sm:right-6">
     <p className="text-sm font-semibold">Help us improve the collective.</p>
     <p className="mt-2 text-sm leading-relaxed text-black/65">With your permission, we measure page visits and button clicks. Your enquiry details are never included in analytics. You can change this choice in the footer.</p>

@@ -44,7 +44,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Big Fish Collective — talent representation and casting",
+        alt: "Big Fish Collective - talent representation and casting",
       },
     ],
   },
@@ -96,7 +96,9 @@ export default function RootLayout({
         <Script
           id="organization-schema"
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
         />
         <CinematicIntro />
         <MotionEffects />

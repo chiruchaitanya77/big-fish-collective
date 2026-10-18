@@ -22,6 +22,7 @@ const localBindingConfig = {
           binding: d1,
           database_name: "big-fish-collective-enquiries",
           database_id: SITE_CREATOR_PLACEHOLDER_DATABASE_ID,
+          migrations_dir: "../../drizzle",
         },
       ]
     : [],

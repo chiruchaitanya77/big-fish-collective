@@ -33,3 +33,55 @@ export const analyticsDaily = sqliteTable("analytics_daily", {
   path: text("path").notNull(),
   count: integer("count").notNull().default(0),
 });
+
+export const analyticsVisitors = sqliteTable("analytics_visitors", {
+  visitorHash: text("visitor_hash").primaryKey(),
+  firstSeenDay: text("first_seen_day").notNull(),
+  lastSeenDay: text("last_seen_day").notNull(),
+  visitCount: integer("visit_count").notNull().default(1),
+});
+
+export const adminUsers = sqliteTable("admin_users", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  email: text("email").notNull().unique(),
+  name: text("name").notNull(),
+  role: text("role", { enum: ["admin", "super_admin"] }).notNull(),
+  passwordHash: text("password_hash").notNull(),
+  passwordSalt: text("password_salt").notNull(),
+  active: integer("active", { mode: "boolean" }).notNull().default(true),
+  lastLoginAt: text("last_login_at"),
+  createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: text("updated_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+});
+
+export const adminSessions = sqliteTable("admin_sessions", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  userId: integer("user_id").notNull(),
+  tokenHash: text("token_hash").notNull().unique(),
+  expiresAt: integer("expires_at").notNull(),
+  lastSeenAt: text("last_seen_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+  revokedAt: text("revoked_at"),
+  createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+});
+
+export const adminAuditLog = sqliteTable("admin_audit_log", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  actorId: integer("actor_id"),
+  action: text("action").notNull(),
+  target: text("target").notNull().default(""),
+  metadata: text("metadata").notNull().default(""),
+  createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+});
+
+export const enquiryEvents = sqliteTable("enquiry_events", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  enquiryId: integer("enquiry_id").notNull(),
+  eventType: text("event_type").notNull(),
+  fromStatus: text("from_status"),
+  toStatus: text("to_status"),
+  actorId: integer("actor_id"),
+  emailSubject: text("email_subject"),
+  emailText: text("email_text"),
+  emailStatus: text("email_status"),
+  createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+});

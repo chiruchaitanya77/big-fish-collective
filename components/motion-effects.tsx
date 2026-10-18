@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 function wrapWords(element: HTMLElement) {
   if (element.dataset.motionWords === "true") return;
@@ -43,7 +44,9 @@ function wrapWords(element: HTMLElement) {
 
 /** Adds lightweight, progressive motion without hiding content when JavaScript is unavailable. */
 export function MotionEffects() {
+  const pathname = usePathname();
   useEffect(() => {
+    if (pathname.startsWith("/admin")) return;
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
@@ -287,7 +290,7 @@ export function MotionEffects() {
       window.removeEventListener("resize", onScroll);
       if (frame) window.cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }

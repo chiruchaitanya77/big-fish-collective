@@ -15,6 +15,27 @@
       "when": 1791423846182,
       "tag": "0001_last_mephistopheles",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1795043200000,
+      "tag": "0002_admin_observatory",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1795043300000,
+      "tag": "0003_enquiry_timeline",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1792317773271,
+      "tag": "0004_equal_fallen_one",
+      "breakpoints": true
     }
   ]
 }

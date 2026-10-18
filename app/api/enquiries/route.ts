@@ -34,6 +34,10 @@ export async function POST(request: Request) {
       if (raced?.payload_hash !== fingerprint) throw new RequestError(409, "This submission changed. Please reload the page and try again.");
     }
     if (result) {
+      try {
+        await db.prepare("INSERT INTO enquiry_events (enquiry_id, event_type, to_status, email_status) VALUES (?, 'received', 'new', 'not_applicable')")
+          .bind(result.id).run();
+      } catch { console.error("Unable to record enquiry timeline", {reference: value.submissionId}); }
       // Lead storage succeeds independently of the email provider.
       const notification = await sendEnquiryEmail(value, env);
       try {

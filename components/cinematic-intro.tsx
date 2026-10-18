@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 
 type IntroPhase = "checking" | "loading" | "revealing" | "done";
 
@@ -25,10 +26,15 @@ function markIntroSeen() {
 }
 
 export function CinematicIntro() {
+  const pathname = usePathname();
+  const isAdminRoute = pathname.startsWith("/admin");
   const [phase, setPhase] = useState<IntroPhase>("checking");
   const skipTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
+    if (isAdminRoute) {
+      return;
+    }
     if (hasSeenIntro()) {
       const doneTimer = window.setTimeout(() => setPhase("done"), 0);
       return () => window.clearTimeout(doneTimer);
@@ -64,7 +70,7 @@ export function CinematicIntro() {
       }
       document.body.classList.remove("intro-active");
     };
-  }, []);
+  }, [isAdminRoute]);
 
   useEffect(() => {
     if (phase === "done") {
@@ -73,7 +79,7 @@ export function CinematicIntro() {
     }
   }, [phase]);
 
-  if (phase === "checking" || phase === "done") return null;
+  if (isAdminRoute || phase === "checking" || phase === "done") return null;
 
   const handleSkip = () => {
     markIntroSeen();
