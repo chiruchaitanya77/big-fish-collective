@@ -12,7 +12,8 @@ export type AdminPrincipal = {
 
 const SESSION_COOKIE = "__Host-bfc_admin_session";
 const SESSION_TTL_SECONDS = 60 * 60 * 24 * 14;
-const PASSWORD_ITERATIONS = 210_000;
+// Cloudflare Workers WebCrypto supports PBKDF2 iteration counts up to 100,000.
+const PASSWORD_ITERATIONS = 100_000;
 
 type StoredUser = AdminPrincipal & {
   password_hash: string;

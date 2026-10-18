@@ -28,7 +28,7 @@ export async function POST(request: Request) {
   const bytes = new Uint8Array(24); crypto.getRandomValues(bytes);
   const salt = btoa(String.fromCharCode(...bytes));
   const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveBits"]);
-  const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt: new TextEncoder().encode(salt), iterations: 210_000 }, key, 256);
+  const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt: new TextEncoder().encode(salt), iterations: 100_000 }, key, 256);
   const hash = Array.from(new Uint8Array(bits), (byte) => byte.toString(16).padStart(2, "0")).join("");
   try {
     const created = await getRawDb().prepare(`INSERT INTO admin_users (name, email, role, password_hash, password_salt, active)
