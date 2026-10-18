@@ -110,7 +110,7 @@ Enter your `G-...` measurement ID. Basic first-party aggregate analytics already
 
 The private dashboard is available at `/admin`. It shows consented, aggregate visitor traffic, unique visitors, returning visitors, call-to-action signals, form conversions, top pages, and the latest enquiries. No individual visitor profiles or enquiry contents are sent to the analytics views. After analytics consent, the site stores a random first-party `bfc_visitor_id` cookie for up to one year; it is not a device fingerprint. Only a SHA-256 hash is stored in D1, and declining analytics removes the cookie.
 
-Clicking an enquiry opens the complete submitted brief/application in a drawer. Enquiry status is intentionally one-way: `Received → Responding → Closed`. Each move requires reviewing and confirming the exact email template, sends that email to the person who submitted the form, and records the transition in the enquiry timeline. If email delivery is unavailable, the status remains unchanged so the team does not appear to have responded when no message was sent.
+Clicking an enquiry opens the complete submitted brief/application in a drawer. Enquiry status is intentionally one-way: `Received → Responded → Closed`. Each move requires reviewing and confirming the exact email template, sends that email to the person who submitted the form, and records the transition in the enquiry timeline. If email delivery is unavailable, the status remains unchanged so the team does not appear to have responded when no message was sent.
 
 Before the first deployment, add the initial core-developer account as Worker secrets. Use a real email address and a unique password of at least 16 characters:
 

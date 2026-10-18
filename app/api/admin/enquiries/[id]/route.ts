@@ -12,7 +12,23 @@ function enquiryIdFrom(value: string) {
 }
 
 function statusContext(status: string) {
-  return status === "new" ? "Received" : status === "in_review" ? "Responding" : "Closed";
+  return status === "new" ? "Received" : status === "in_review" ? "Responded" : "Closed";
+}
+
+type TimelineEvent = { id: number; eventType: string; fromStatus: string | null; toStatus: string | null; actorId: number | null; emailSubject: string | null; emailText: string | null; emailStatus: string | null; createdAt: string };
+
+function normaliseTimeline(rawEvents: unknown[], enquiry: Record<string, unknown>, currentStatus: string): TimelineEvent[] {
+  const events = rawEvents as TimelineEvent[];
+  const hasReceived = events.some((event) => event.eventType === "received" || event.toStatus === "new");
+  const hasResponded = events.some((event) => event.eventType === "responded" || event.eventType === "responding" || event.toStatus === "in_review");
+  const hasClosed = events.some((event) => event.eventType === "closed" || event.toStatus === "closed");
+  const firstEventDate = events[0]?.createdAt || String(enquiry.createdAt);
+  const lastEventDate = events.at(-1)?.createdAt || String(enquiry.createdAt);
+  const received: TimelineEvent = { id: -1, eventType: "received", fromStatus: null, toStatus: "new", actorId: null, emailSubject: null, emailText: null, emailStatus: "not_applicable", createdAt: String(enquiry.createdAt) };
+  const responded: TimelineEvent = { id: -2, eventType: "responded", fromStatus: "new", toStatus: "in_review", actorId: null, emailSubject: null, emailText: null, emailStatus: "not_applicable", createdAt: lastEventDate || firstEventDate };
+  const closed: TimelineEvent = { id: -3, eventType: "closed", fromStatus: "in_review", toStatus: "closed", actorId: null, emailSubject: null, emailText: null, emailStatus: "not_applicable", createdAt: lastEventDate || firstEventDate };
+  const normalised = [...(!hasReceived ? [received] : []), ...(!hasResponded && (currentStatus === "in_review" || currentStatus === "closed") ? [responded] : []), ...events, ...(!hasClosed && currentStatus === "closed" ? [closed] : [])];
+  return normalised.sort((left, right) => left.createdAt.localeCompare(right.createdAt) || left.id - right.id);
 }
 
 export async function GET(request: Request, context: { params: Promise<{ id: string }> }) {
@@ -37,7 +53,7 @@ export async function GET(request: Request, context: { params: Promise<{ id: str
   const currentStatus = String(enquiry.status);
   const nextStatus = transitions[currentStatus];
   const preview = nextStatus ? buildStatusEmail({ kind, name: String(enquiry.name), email: String(enquiry.email), submissionId: String(enquiry.submissionId || enquiry.id) }, nextStatus) : null;
-  const timeline = events.results.length ? events.results : [{ id: 0, eventType: "received", fromStatus: null, toStatus: "new", actorId: null, emailSubject: null, emailText: null, emailStatus: "not_applicable", createdAt: String(enquiry.createdAt) }];
+  const timeline = normaliseTimeline(events.results, enquiry, currentStatus);
   return noStoreJson({
     enquiry: {
       ...enquiry,
@@ -82,7 +98,7 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
   if (!changed) return noStoreJson({ error: "This enquiry has already moved forward. Refresh the drawer to see its current status." }, 409);
   await db.prepare(`INSERT INTO enquiry_events
     (enquiry_id, event_type, from_status, to_status, actor_id, email_subject, email_text, email_status)
-    VALUES (?, ?, ?, ?, ?, ?, ?, 'sent') RETURNING id`).bind(id, status === "in_review" ? "responding" : "closed", expectedStatus, status, user.id, template.subject, template.text).first<{ id: number }>();
+    VALUES (?, ?, ?, ?, ?, ?, ?, 'sent') RETURNING id`).bind(id, status === "in_review" ? "responded" : "closed", expectedStatus, status, user.id, template.subject, template.text).first<{ id: number }>();
   await writeAudit(user.id, "enquiry_status_changed", String(id), JSON.stringify({ from: expectedStatus, to: status, emailStatus }));
   return noStoreJson({ ok: true, emailStatus, enquiry: changed });
 }

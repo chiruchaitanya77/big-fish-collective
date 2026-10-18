@@ -94,7 +94,7 @@ export function buildStatusEmail(
           "If your plans change or you have a new brief, you’re welcome to contact us again with the latest details.",
           "",
           "Warmly,",
-          "Big Fish Collective",
+          "Team Big Fish Collective",
         ].join("\n");
   const safeName = escapeHtml(value.name);
   const isReview = status === "in_review";

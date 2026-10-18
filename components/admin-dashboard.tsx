@@ -18,7 +18,7 @@ import type { DashboardData } from "@/lib/admin-data";
 
 const statusContext: Record<string, string> = {
   new: "Received",
-  in_review: "Responding",
+  in_review: "Responded",
   closed: "Closed",
 };
 const eventLabel = (event: string) =>
@@ -79,6 +79,13 @@ function Metric({
       <span>{detail}</span>
     </article>
   );
+}
+
+function RecentEnquiries({ enquiries, onOpen, primary = false }: { enquiries: DashboardData["enquiries"]; onOpen: (id: number) => void; primary?: boolean }) {
+  return <section className="admin-panel admin-enquiries">
+    <div className="admin-panel-heading"><div><p className="admin-eyebrow">{primary ? "Primary workspace" : "Pipeline"}</p><h2>Recent enquiries</h2></div><span>{enquiries.length} latest · click a row to open</span></div>
+    <div className="admin-table-wrap max-h-[30rem] overflow-y-auto overscroll-contain"><table><thead><tr><th className="sticky top-0 z-[1] bg-white">Contact</th><th className="sticky top-0 z-[1] bg-white">Context</th><th className="sticky top-0 z-[1] bg-white">Category</th><th className="sticky top-0 z-[1] bg-white">Received</th><th className="sticky top-0 z-[1] bg-white">Status</th></tr></thead><tbody>{enquiries.map((enquiry) => <tr key={enquiry.id} className="admin-enquiry-row" tabIndex={0} onClick={() => onOpen(enquiry.id)} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); onOpen(enquiry.id); } }}><td><strong>{enquiry.name}</strong><a href={`mailto:${enquiry.email}`} onClick={(event) => event.stopPropagation()}>{enquiry.email}</a></td><td>{enquiry.kindContext}</td><td>{enquiry.category}</td><td>{formatDate(enquiry.createdAt)}</td><td><span className={`admin-status-chip admin-status-${enquiry.status}`}><i />{statusContext[enquiry.status] || enquiry.status}</span></td></tr>)}</tbody></table>{!enquiries.length ? <p className="admin-empty">No enquiries have been received yet.</p> : null}</div>
+  </section>;
 }
 
 export function AdminDashboard({
@@ -355,6 +362,14 @@ export function AdminDashboard({
           {message}
         </p>
       ) : null}
+      {!isSuper ? <RecentEnquiries enquiries={data.enquiries} onOpen={(id) => void openEnquiry(id)} primary /> : null}
+      <div className="admin-analytics-heading">
+        <div>
+          <p className="admin-eyebrow">Secondary view</p>
+          <h2>Analytics & performance</h2>
+        </div>
+        <p className="max-w-md text-sm text-black/55">Use these signals to understand demand and follow-up performance after the enquiry pipeline is handled.</p>
+      </div>
       <section className="admin-metrics-grid">
         <Metric
           label="Visitors"
@@ -514,68 +529,7 @@ export function AdminDashboard({
           </ul>
         </article>
       </section>
-      <section className="admin-panel admin-enquiries">
-        <div className="admin-panel-heading">
-          <div>
-            <p className="admin-eyebrow">Pipeline</p>
-            <h2>Recent enquiries</h2>
-          </div>
-          <span>{data.enquiries.length} latest · click a row to open</span>
-        </div>
-        <div className="admin-table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Contact</th>
-                <th>Context</th>
-                <th>Category</th>
-                <th>Received</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.enquiries.map((enquiry) => (
-                <tr
-                  key={enquiry.id}
-                  className="admin-enquiry-row"
-                  tabIndex={0}
-                  onClick={() => void openEnquiry(enquiry.id)}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter" || event.key === " ") {
-                      event.preventDefault();
-                      void openEnquiry(enquiry.id);
-                    }
-                  }}
-                >
-                  <td>
-                    <strong>{enquiry.name}</strong>
-                    <a
-                      href={`mailto:${enquiry.email}`}
-                      onClick={(event) => event.stopPropagation()}
-                    >
-                      {enquiry.email}
-                    </a>
-                  </td>
-                  <td>{enquiry.kindContext}</td>
-                  <td>{enquiry.category}</td>
-                  <td>{formatDate(enquiry.createdAt)}</td>
-                  <td>
-                    <span
-                      className={`admin-status-chip admin-status-${enquiry.status}`}
-                    >
-                      <i />
-                      {statusContext[enquiry.status] || enquiry.status}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {!data.enquiries.length ? (
-            <p className="admin-empty">No enquiries have been received yet.</p>
-          ) : null}
-        </div>
-      </section>
+      {isSuper ? <RecentEnquiries enquiries={data.enquiries} onOpen={(id) => void openEnquiry(id)} /> : null}
       {isSuper ? (
         <section className="admin-staff-section">
           <div className="admin-section-heading">
@@ -678,7 +632,7 @@ export function AdminDashboard({
               <h2>Recent admin activity</h2>
             </div>
           </div>
-          <ul className="admin-event-list">
+          <ul className="admin-event-list max-h-72 overflow-y-auto overscroll-contain pr-2">
             {data.activity.length ? (
               data.activity.map((item) => (
                 <li key={item.id}>
@@ -854,11 +808,11 @@ function EnquiryDrawer({
                     <span className="admin-timeline-dot" />
                     <div>
                       <strong>
-                        {event.eventType === "received"
-                          ? "Received"
-                          : event.eventType === "responding"
-                            ? "Responding"
-                            : "Closed"}
+                      {event.eventType === "received"
+                        ? "Received"
+                        : event.eventType === "responding" || event.eventType === "responded"
+                          ? "Responded"
+                          : "Closed"}
                       </strong>
                       <small>
                         {formatDate(event.createdAt)}
