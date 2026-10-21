@@ -18,6 +18,7 @@ export const enquiries = sqliteTable("enquiries", {
   submissionId: text("submission_id").unique(),
   payloadHash: text("payload_hash"),
   notificationStatus: text("notification_status").notNull().default("not_configured"),
+  applicantNotificationStatus: text("applicant_notification_status").notNull().default("not_configured"),
   createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
 });
 

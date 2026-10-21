@@ -4,6 +4,7 @@ type EmailConfig = {
   RESEND_API_KEY?: string;
   ENQUIRY_FROM_EMAIL?: string;
   ENQUIRY_TO_EMAIL?: string;
+  SUPER_ADMIN_EMAIL?: string;
 };
 export type EnquiryStatus = "in_review" | "closed";
 
@@ -155,6 +156,22 @@ export function buildStatusEmail(
   return { subject, text, html };
 }
 
+export function buildReceivedEmail(value: { kind: "talent" | "partner"; name: string; email: string; submissionId: string }): StatusEmail {
+  const base = buildStatusEmail(value, "in_review");
+  const subject = `Big Fish Collective - We received your ${value.kind === "talent" ? "application" : "project brief"}`;
+  return {
+    subject,
+    text: base.text
+      .replace("We’re reviewing", "We’ve received")
+      .replace("Our team is now reviewing the details you shared and will follow up by email.", "We’ve received your details. Our team will review them and follow up by email.")
+      .replace("There is nothing else you need to do right now. We’ll be in touch as soon as we have an update.", "There is nothing else you need to do right now. We’ll be in touch after our review."),
+    html: base.html
+      .replace("Your enquiry is being reviewed", "We received your enquiry")
+      .replace("Our team is now reviewing the details you shared and will follow up by email.", "We’ve received your details. Our team will review them and follow up by email.")
+      .replace("There is nothing else you need to do right now. We’ll be in touch as soon as we have an update.", "There is nothing else you need to do right now. We’ll be in touch after our review."),
+  };
+}
+
 export async function sendEnquiryEmail(
   value: z.infer<typeof enquirySchema>,
   config: EmailConfig,
@@ -207,6 +224,22 @@ export async function sendEnquiryEmail(
     reference: value.submissionId,
   });
   return "failed";
+}
+
+export async function sendApplicantEnquiryEmail(value: z.infer<typeof enquirySchema>, config: EmailConfig, send: typeof fetch = fetch) {
+  if (!config.RESEND_API_KEY || !config.ENQUIRY_FROM_EMAIL) return "not_configured";
+  const template = buildReceivedEmail(value);
+  try {
+    const response = await send("https://api.resend.com/emails", {
+      method: "POST",
+      signal: AbortSignal.timeout(6000),
+      headers: { Authorization: `Bearer ${config.RESEND_API_KEY}`, "Content-Type": "application/json", "Idempotency-Key": `enquiry-applicant-${value.submissionId}` },
+      body: JSON.stringify({ from: config.ENQUIRY_FROM_EMAIL, to: [value.email], reply_to: config.ENQUIRY_TO_EMAIL || config.ENQUIRY_FROM_EMAIL, subject: template.subject, text: template.text, html: template.html }),
+    });
+    return response.ok ? "sent" : "failed";
+  } catch {
+    return "failed";
+  }
 }
 
 export async function sendEnquiryStatusEmail(

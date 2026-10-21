@@ -96,7 +96,14 @@ pnpm exec wrangler secret put ENQUIRY_FROM_EMAIL --config wrangler.hosting.json
 pnpm exec wrangler secret put ENQUIRY_TO_EMAIL --config wrangler.hosting.json
 ```
 
-Each command prompts for the value; do not paste actual secrets into source files or Git. Set FROM to a verified Resend sender and TO to your receiving inbox. Configure these after the initial Worker deployment. `wrangler secret put` applies a new deployed version.
+Each command prompts for the value; do not paste actual secrets into source files or Git. Set FROM to a verified Resend sender and TO to the internal team inbox. After a form is successfully stored, the system sends two independent plain-text/HTML notifications: an internal copy to `ENQUIRY_TO_EMAIL` and a confirmation to the applicant's submitted email address. The applicant email is idempotent and does not expose the internal inbox.
+
+The configured `SUPER_ADMIN_EMAIL` also receives deduplicated operational alerts when applicant/internal email delivery fails, enquiry rate limits are reached, or the browser reports an unhandled application error. Alerts are rate-limited by category so one outage does not flood the super-admin inbox. Run the migration and redeploy after enabling these changes:
+
+```sh
+pnpm run db:remote
+pnpm run hosting:deploy
+```
 
 For optional Google Analytics:
 

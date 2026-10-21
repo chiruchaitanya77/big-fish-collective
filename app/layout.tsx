@@ -4,6 +4,7 @@ import "./globals.css";
 import { SiteAnalytics } from "@/components/site-analytics";
 import { MotionEffects } from "@/components/motion-effects";
 import { CinematicIntro } from "@/components/cinematic-intro";
+import { ClientErrorReporter } from "@/components/client-error-reporter";
 
 const siteUrl = "https://big-fish-collective.bigfishcollective.workers.dev";
 const googleAnalyticsId = "G-20W2WXT25M";
@@ -103,6 +104,7 @@ export default function RootLayout({
         <CinematicIntro />
         <MotionEffects />
         <SiteAnalytics />
+        <ClientErrorReporter />
         {children}
       </body>
     </html>

@@ -36,6 +36,13 @@
       "when": 1792317773271,
       "tag": "0004_equal_fallen_one",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1792382533693,
+      "tag": "0005_absurd_mad_thinker",
+      "breakpoints": true
     }
   ]
 }

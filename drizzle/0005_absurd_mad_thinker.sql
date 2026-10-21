@@ -1,0 +1,1 @@
+ALTER TABLE `enquiries` ADD `applicant_notification_status` text DEFAULT 'not_configured' NOT NULL;

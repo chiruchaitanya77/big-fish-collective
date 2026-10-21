@@ -2,6 +2,7 @@ import { env } from "cloudflare:workers";
 import { getRawDb } from "@/db";
 import { buildStatusEmail, enquiryContext, sendEnquiryStatusEmail, type EnquiryStatus } from "@/lib/enquiry-email";
 import { writeAudit } from "@/lib/admin-auth";
+import { notifySuperAdmin } from "@/lib/ops-alerts";
 import { noStoreJson, requireAdminApi, validAdminOrigin } from "@/lib/admin-request";
 
 const transitions: Record<string, EnquiryStatus | null> = { new: "in_review", in_review: "closed", closed: null };
@@ -92,7 +93,10 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
   }
   const template = buildStatusEmail({ ...enquiry, submissionId: enquiry.submissionId || String(id) }, status);
   const emailStatus = await sendEnquiryStatusEmail({ ...enquiry, submissionId: enquiry.submissionId || String(id) }, status, env);
-  if (emailStatus !== "sent") return noStoreJson({ error: "The status was not changed because the confirmation email could not be sent. Check email configuration and try again.", emailStatus }, 503);
+  if (emailStatus !== "sent") {
+    await notifySuperAdmin(db, env, "status-email-failure", `Status email for enquiry ${id} could not be sent (${emailStatus}).`);
+    return noStoreJson({ error: "The status was not changed because the confirmation email could not be sent. Check email configuration and try again.", emailStatus }, 503);
+  }
   const changed = await db.prepare("UPDATE enquiries SET status = ? WHERE id = ? AND status = ? RETURNING id, status")
     .bind(status, id, expectedStatus).first<{ id: number; status: string }>();
   if (!changed) return noStoreJson({ error: "This enquiry has already moved forward. Refresh the drawer to see its current status." }, 409);
